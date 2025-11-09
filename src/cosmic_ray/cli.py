@@ -24,6 +24,7 @@ import cosmic_ray.distribution.http
 import cosmic_ray.modules
 import cosmic_ray.mutating
 import cosmic_ray.plugins
+import cosmic_ray.testing
 from cosmic_ray.config import load_config, serialize_config
 from cosmic_ray.mutating import apply_mutation
 from cosmic_ray.progress import report_progress
@@ -44,6 +45,7 @@ log = logging.getLogger()
 @click.version_option(version=__version__)
 def cli(verbosity):
     "Mutation testing for Python3"
+    # breakpoint()
     logging_level = getattr(logging, verbosity)
     logging.basicConfig(level=logging_level, handlers=[RichHandler()])
 
@@ -268,6 +270,7 @@ def mutate_and_test(module_path, operator, occurrence, test_command, keep_stdout
     """
     with open(os.devnull, "w") as devnull:
         with redirect_stdout(sys.stdout if keep_stdout else devnull):
+            # breakpoint()
             work_result = cosmic_ray.mutating.mutate_and_test(
                 [
                     MutationSpec(
@@ -300,6 +303,8 @@ def main(argv=None):
 
     if hasattr(signal, "SIGINFO"):
         signal.signal(getattr(signal, "SIGINFO"), lambda *args: report_progress(sys.stderr))
+
+    # breakpoint()
 
     try:
         return cli(argv)
