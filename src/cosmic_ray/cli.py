@@ -141,6 +141,8 @@ def baseline(config_file, session_file):
     def path_or_temp(path):
         if path is None:
             with tempfile.TemporaryDirectory() as tmpdir:
+                if not os.path.isdir(Path(tmpdir)):
+                    os.mkdir(Path(tmpdir))
                 yield Path(tmpdir) / "session.sqlite"
         else:
             yield path
