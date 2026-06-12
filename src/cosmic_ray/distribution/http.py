@@ -18,9 +18,10 @@ configure the list of worker URLs in ``cosmic-ray.distributor.http.worker-urls``
 """
 
 import asyncio
+import json
 import logging
 from pathlib import Path
-import pdb;
+# import pdb;
 # pdb.set_trace()
 
 import aiohttp
@@ -60,8 +61,8 @@ class HttpDistributor(Distributor):
             # TODO: If one of the URLs we've got is bad (i.e. no worker is running on it), that will result in an
             # exception from one of the tasks. We should notice this, log it, and remove the offending URL from the
             # pool.
+            print(json.dumps({"message": "Entering function handle_completed_task with Task", "task": str(task)}))
             breakpoint()
-            print(f"Entering function handle_completed_task with Task: \n{task}")
             url, completed_job_id = fetchers[task]
             try:
                 result = await task
@@ -119,8 +120,8 @@ async def send_request(url, work_item: WorkItem, test_command, timeout):
         "test_command": test_command,
         "timeout": timeout,
     }
+    print(json.dumps({"message": "Entering function send_request with Work Item", "work_item": str(work_item)}))
     breakpoint()
-    print(f"Entering function send_request with Work Item\n{work_item}")
     log.info("Sending HTTP request to %s", url)
     async with aiohttp.request("POST", url, json=parameters) as resp:
         result = await resp.json()
