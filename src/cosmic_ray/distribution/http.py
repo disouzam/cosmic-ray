@@ -61,7 +61,8 @@ class HttpDistributor(Distributor):
             # TODO: If one of the URLs we've got is bad (i.e. no worker is running on it), that will result in an
             # exception from one of the tasks. We should notice this, log it, and remove the offending URL from the
             # pool.
-            print(json.dumps({"message": "Entering function handle_completed_task with Task", "task": str(task)}))
+            print("Entering function handle_completed_task with Task...")
+            print(json.dumps( task, indent=True))
             breakpoint()
             url, completed_job_id = fetchers[task]
             try:
@@ -120,7 +121,9 @@ async def send_request(url, work_item: WorkItem, test_command, timeout):
         "test_command": test_command,
         "timeout": timeout,
     }
-    print(json.dumps({"message": "Entering function send_request with Work Item", "work_item": str(work_item)}))
+    
+    print("Entering function send_request with Work Item...")
+    print(json.dumps(work_item, indent=True))
     breakpoint()
     log.info("Sending HTTP request to %s", url)
     async with aiohttp.request("POST", url, json=parameters) as resp:
