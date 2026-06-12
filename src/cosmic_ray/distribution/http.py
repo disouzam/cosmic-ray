@@ -62,7 +62,7 @@ class HttpDistributor(Distributor):
             # exception from one of the tasks. We should notice this, log it, and remove the offending URL from the
             # pool.
             print("Entering function handle_completed_task with Task...")
-            print(json.dumps( task, indent=True))
+            print(json.dumps(str(task), indent=4))
             breakpoint()
             url, completed_job_id = fetchers[task]
             try:
@@ -123,7 +123,7 @@ async def send_request(url, work_item: WorkItem, test_command, timeout):
     }
     
     print("Entering function send_request with Work Item...")
-    print(json.dumps(work_item, indent=True))
+    print(json.dumps(str(work_item), indent=4))
     breakpoint()
     log.info("Sending HTTP request to %s", url)
     async with aiohttp.request("POST", url, json=parameters) as resp:
