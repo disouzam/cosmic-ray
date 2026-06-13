@@ -35,6 +35,7 @@ def run_tests(command, timeout):
         containing the output of the command.
     """
     log.info("Running test (timeout=%s): %s", timeout, command)
+    breakpoint()
 
     # We want to avoid writing pyc files in case our changes happen too fast for Python to
     # notice them. If the timestamps between two changes are too small, Python won't recompile
