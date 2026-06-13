@@ -177,6 +177,7 @@ class MutationVisitor(Visitor):
         Returns:
             tuple[str, str|None]: The original code and the mutated code (or None)
         """
+        breakpoint()
         log.info("Applying mutation: path=%s, op=%s, occurrence=%s", module_path, operator, occurrence)
 
         original_code = read_python_source(module_path)
