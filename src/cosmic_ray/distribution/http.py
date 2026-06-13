@@ -47,6 +47,7 @@ class HttpDistributor(Distributor):
         asyncio.get_event_loop().run_until_complete(self._process(*args, **kwargs))
 
     async def _process(self, pending_work, test_command, timeout, config, on_task_complete):
+        breakpoint()
         urls = config.get("worker-urls", [])
 
         if not urls:
