@@ -105,9 +105,14 @@ async def send_request(url, work_item: WorkItem, test_command, timeout):
 
     Returns: A `WorkResult`.
     """
+    job_id = work_item.job_id
+    report_name = f"report_{job_id}.html"
+
     parameters = {
         "mutations": [
             {
+                "job_id": work_item.job_id,
+                "report_name": report_name,
                 "module_path": str(mutation.module_path),
                 "operator": mutation.operator_name,
                 "occurrence": mutation.occurrence,
