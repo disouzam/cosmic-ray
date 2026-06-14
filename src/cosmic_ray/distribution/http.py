@@ -104,6 +104,7 @@ async def send_request(url, work_item: WorkItem, test_command, timeout):
 
     Returns: A `WorkResult`.
     """
+    test_command_with_appended_job_id = f"{test_command} --job_id={work_item.job_id}"
     parameters = {
         "mutations": [
             {
@@ -113,7 +114,7 @@ async def send_request(url, work_item: WorkItem, test_command, timeout):
             }
             for mutation in work_item.mutations
         ],
-        "test_command": test_command,
+        "test_command": test_command_with_appended_job_id,
         "timeout": timeout,
     }
     log.info("Sending HTTP request to %s", url)

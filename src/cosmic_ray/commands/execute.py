@@ -42,6 +42,7 @@ def execute(work_db, config: ConfigDict):
         work_db.set_result(job_id, work_result)
         _update_progress(work_db)
         log.info("Job %s complete", job_id)
+        print(f"\nJob completed... Job id: {job_id}")
 
     log.info("Beginning execution")
     distributor(

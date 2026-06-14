@@ -36,6 +36,21 @@ def run_tests(command, timeout):
     """
     log.info("Running test (timeout=%s): %s", timeout, command)
 
+    split_command = command.split(' ')
+    report_arg_index = [i for i, x in enumerate(split_command) if '--report=' in x][0]
+    report_arg = split_command[report_arg_index]
+    report_name = report_arg[9:]
+    job_id_arg = [i for i in split_command if '--job_id' in i][0]
+    job_id = job_id_arg[9:]
+    prefix=report_name[:-5]
+    extension = report_name[-5:]
+    report_name_with_job_id = f"{prefix}_{job_id}{extension}"
+    report_arg_new = f"--report={report_name_with_job_id}"
+    split_command.remove(job_id_arg)
+    split_command[report_arg_index] = report_arg_new
+    new_command = ' '.join(split_command)
+    command = new_command
+
     # We want to avoid writing pyc files in case our changes happen too fast for Python to
     # notice them. If the timestamps between two changes are too small, Python won't recompile
     # the source.
