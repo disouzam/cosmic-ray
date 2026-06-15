@@ -50,6 +50,7 @@ except PackageNotFoundError:
 @click.version_option(version=__version__)
 def cli(verbosity):
     "Mutation testing for Python3"
+    breakpoint()
     logging_level = getattr(logging, verbosity)
     logging.basicConfig(level=logging_level, handlers=[RichHandler()])
 
@@ -57,6 +58,7 @@ def cli(verbosity):
 @cli.command()
 @click.argument("config_file", type=click.File("wt"))
 def new_config(config_file):
+    breakpoint()
     """Create a new config file."""
     cfg = cosmic_ray.commands.new_config()
     config_str = serialize_config(cfg)
@@ -86,6 +88,7 @@ def init(config_file, session_file, force):
     modules-under-test and simply generates the work order which can be
     executed with other commands.
     """
+    breakpoint()
     cfg = load_config(config_file)
     operators_cfg = cfg.operators_config
 
@@ -119,6 +122,7 @@ def handle_exec(config_file, session_file):
     This requires that the rest of your mutation testing
     infrastructure (e.g. worker processes) are already running.
     """
+    breakpoint()
     cfg = load_config(config_file)
 
     with use_db(session_file, mode=WorkDB.Mode.open) as work_db:
@@ -141,6 +145,7 @@ def baseline(config_file, session_file):
 
     Exits with 0 if the job has exited normally, otherwise 1.
     """
+    breakpoint()
     cfg = load_config(config_file)
 
     @contextmanager
@@ -186,6 +191,7 @@ def dump(session_file):
     WorkResult, both JSON-serialized. The WorkResult can be null, indicating a
     WorkItem with no results.
     """
+    breakpoint()
 
     def item_to_dict(work_item):
         d = asdict(work_item)
@@ -211,6 +217,7 @@ def dump(session_file):
 @cli.command()
 def operators():
     """List the available operator plugins."""
+    breakpoint()
     print("\n".join(cosmic_ray.plugins.operator_names()))
 
     sys.exit(ExitCode.OK)
@@ -219,6 +226,7 @@ def operators():
 @cli.command()
 def distributors():
     """List the available distributor plugins."""
+    breakpoint()
     print("\n".join(cosmic_ray.plugins.distributor_names()))
 
     sys.exit(ExitCode.OK)
@@ -230,6 +238,7 @@ def distributors():
 @click.argument("occurrence", type=int)
 def apply(module_path, operator, occurrence):
     """Apply the specified mutation to the files on disk. This is primarily a debugging tool."""
+    breakpoint()
 
     apply_mutation(Path(module_path), cosmic_ray.plugins.get_operator(operator)(), occurrence)
 
@@ -241,6 +250,7 @@ def apply(module_path, operator, occurrence):
 @click.option("--path", default=None, help="Path to Unix domain socket on which to listen for requests")
 def http_worker(port, path):
     """Run an HTTP worker for the 'http' distributor."""
+    breakpoint()
     if (port is None) == (path is None):
         log.error("You must specify exactly one of --path or --port")
         sys.exit(ExitCode.USAGE)
@@ -270,6 +280,7 @@ def mutate_and_test(module_path, operator, occurrence, test_command, keep_stdout
     by an distributor. However, it can be useful to run this on
     its own for testing and debugging purposes.
     """
+    breakpoint()
     with open(os.devnull, "w") as devnull:
         with redirect_stdout(sys.stdout if keep_stdout else devnull):
             work_result = cosmic_ray.mutating.mutate_and_test(
@@ -300,6 +311,7 @@ def main(argv=None):
 
     :param argv: the command line arguments
     """
+    breakpoint()
     signal.signal(signal.SIGINT, lambda *args: sys.exit(_SIGNAL_EXIT_CODE_BASE + signal.SIGINT))
 
     if hasattr(signal, "SIGINFO"):
