@@ -21,14 +21,16 @@ def load_config(filename=None):
     try:
         with _config_stream(filename) as handle:
             filename = handle.name
-            return deserialize_config(handle.read())
+            deserialized_configs = deserialize_config(handle.read())
+            return deserialized_configs
     except (OSError, toml.TomlDecodeError, UnicodeDecodeError) as exc:
         raise ConfigError(f"Error loading configuration from {filename}") from exc
 
 
 def deserialize_config(sz) -> "ConfigDict":
     "Parse a serialized config into a ConfigDict."
-    return toml.loads(sz, _dict=ConfigDict)["cosmic-ray"]
+    retval = toml.loads(sz, _dict=ConfigDict)["cosmic-ray"]
+    return retval
 
 
 def serialize_config(config):
