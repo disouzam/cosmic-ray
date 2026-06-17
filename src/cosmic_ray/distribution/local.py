@@ -24,9 +24,10 @@ class LocalDistributor(Distributor):
 
     def __call__(self, pending_work, test_command, timeout, _distributor_config, on_task_complete):
         for work_item in pending_work:
+            test_command_with_appended_job_id = f"{test_command} --job_id={work_item.job_id}"
             result = mutate_and_test(
                 mutations=work_item.mutations,
-                test_command=test_command,
+                test_command=test_command_with_appended_job_id,
                 timeout=timeout,
             )
             on_task_complete(work_item.job_id, result)
