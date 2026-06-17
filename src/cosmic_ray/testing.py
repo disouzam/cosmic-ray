@@ -48,7 +48,7 @@ def run_tests(command, timeout):
         extension = report_name[-5:]
         report_name_with_job_id = f"{prefix}_{job_id}{extension}"
         report_arg_new = f"--report={report_name_with_job_id}"
-        split_command.remove(job_id_arg)
+        # split_command.remove(job_id_arg)
         split_command[list_with_report_arg_indexes[0]] = report_arg_new
         new_command = ' '.join(split_command)
         command = new_command
