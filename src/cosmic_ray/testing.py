@@ -38,7 +38,7 @@ def run_tests(command, timeout):
 
     split_command = command.split(' ')
     list_with_report_arg_indexes = [i for i, x in enumerate(split_command) if '--report=' in x]
-    list_with_job_id_arg_indexes = [i for i, x in enumerate(split_command) if '--job_id=' in x]
+    list_with_job_id_arg_indexes = [i for i, x in enumerate(split_command) if '--job-id=' in x]
     if len(list_with_report_arg_indexes) > 0 and len(list_with_job_id_arg_indexes) > 0:
         report_arg = split_command[list_with_report_arg_indexes[0]]
         report_name = report_arg[9:]
