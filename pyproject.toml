@@ -69,6 +69,7 @@ dev = [
   "hypothesis",
   "nox",
   "pytest",
+  "pytest-cov>=7.1.0",
   "ruff",
   "sphinx",
   "sphinx-click>=6.0.0",
