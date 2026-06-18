@@ -53,7 +53,7 @@ def test_private_make_diff(path_utils):
         )
 
         expected = WorkResult(
-            output='',
+            output="",
             test_outcome=TestOutcome.KILLED,
             diff='--- mutation diff ---\n--- a/adam_1.py\n+++ b/adam_1.py\n@@ -33,7 +33,7 @@\n \n def bool_if():\n     if object():\n-        return True\n+        return False\n \n     raise Exception("bool_if() failed")\n ',
             worker_outcome=WorkerOutcome.NORMAL,
