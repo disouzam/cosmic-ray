@@ -61,6 +61,8 @@ def run_tests(command, timeout):
 
     try:
         print(f"Starting job id: {job_id}...")
+        if job_id == '35db8f93d1ff4409afc101ec36adec87':
+            breakpoint()
         proc = subprocess.run(shlex.split(command), check=True, env=env, timeout=timeout, capture_output=True)
         assert proc.returncode == 0
         return (TestOutcome.SURVIVED, proc.stdout.decode("utf-8"))
