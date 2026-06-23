@@ -60,6 +60,7 @@ def run_tests(command, timeout):
     env["PYTHONDONTWRITEBYTECODE"] = "1"
 
     try:
+        print(f"Starting job id: {job_id}...")
         proc = subprocess.run(shlex.split(command), check=True, env=env, timeout=timeout, capture_output=True)
         assert proc.returncode == 0
         return (TestOutcome.SURVIVED, proc.stdout.decode("utf-8"))

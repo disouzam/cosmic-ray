@@ -52,6 +52,7 @@ def mutate_and_test(mutations: Iterable[MutationSpec], test_command, timeout) ->
         with contextlib.ExitStack() as stack:
             file_changes: dict[Path, tuple[str, str]] = {}
             for mutation in mutations:
+                print(f"Working on mutant: {mutation}")
                 operator_class = cosmic_ray.plugins.get_operator(mutation.operator_name)
                 try:
                     operator_args = mutation.operator_args
